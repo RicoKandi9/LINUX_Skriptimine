@@ -1,5 +1,6 @@
 #!/bin/bash
-# kasutajad_paroolid_genereeritud - Ülesanne 5: paroolide genereerimine ja logimine
+# kasutajad_paroolid_genereeritud - Ülesanded 5 ja 6: paroolide genereerimine, logimine
+# ja root kasutaja õiguste kontroll
 # Autor: Rico Kandi
 #
 # Kasutamine: sudo ./kasutajad_paroolid_genereeritud kasutajate_fail
@@ -8,6 +9,16 @@
 # 8-märgiline parool (ainult tähed), kasutaja lisatakse süsteemi ja kasutajanimi ning
 # parool salvestatakse logifaili kujul kasutajanimi:parool.
 # Kõik vajalik on selle skripti sees, teisi skripte välja ei kutsuta.
+# Ülesanne 6: skripti võib käivitada ainult root kasutaja (sudo kaudu on käivitaja samuti root,
+# tavakasutajana käivitamine keelatakse ja skript lõpetab töö).
+
+# root kasutaja kontroll
+kaivitav_kasutaja=$(whoami)
+if [ "$kaivitav_kasutaja" != "root" ]; then
+    echo "Sul ei ole õigust antud skripti käivitamiseks (käivitaja: $kaivitav_kasutaja)"
+    echo "Käivita root õigustes: sudo $0 kasutajate_fail"
+    exit 4
+fi
 
 logifail="loodud_kasutajad_paroolidega"
 
