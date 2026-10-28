@@ -1,0 +1,39 @@
+#!/bin/bash
+# kasutajad_failist_parooliga - Ülesanne 3: kasutajad paroolidega failist
+# Autor: Rico Kandi
+#
+# Kasutamine: sudo ./kasutajad_failist_parooliga failinimi
+#
+# Faili iga rida on kujul kasutajanimi:parool (parool on avatud kujul).
+# Kasutaja luuakse skriptiga lisa_kasutaja ja parool lisatakse käsuga chpasswd,
+# mis salvestab parooli räsi faili /etc/shadow.
+
+if [ $# -ne 1 ]; then
+    echo "Kasutusjuhend: $0 failinimi"
+    exit 1
+fi
+
+failinimi=$1
+skripti_kaust=$(dirname "$0")
+
+if [ -f "$failinimi" ] && [ -r "$failinimi" ]; then
+    echo "Fail $failinimi on korras"
+    while IFS= read -r rida || [ -n "$rida" ]
+    do
+        if [ -z "$rida" ]; then
+            continue
+        fi
+        # rida jagatakse kooloni järgi kaheks: kasutajanimi ja parool
+        kasutajanimi=$(echo "$rida" | cut -d: -f1)
+        parool=$(echo "$rida" | cut -d: -f2)
+        sh "$skripti_kaust/lisa_kasutaja" "$kasutajanimi"
+        # parool lisatakse ainult siis, kui kasutaja on süsteemis olemas
+        if id "$kasutajanimi" > /dev/null 2>&1; then
+            echo "$kasutajanimi:$parool" | chpasswd
+            echo "Kasutajale $kasutajanimi on parool määratud"
+        fi
+    done < "$failinimi"
+else
+    echo "Probleem failiga $failinimi"
+    exit 2
+fi
