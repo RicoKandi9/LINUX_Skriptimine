@@ -1,0 +1,60 @@
+#!/bin/bash
+# kasutajad_paroolid_genereeritud - Ülesanne 5: paroolide genereerimine ja logimine
+# Autor: Rico Kandi
+#
+# Kasutamine: sudo ./kasutajad_paroolid_genereeritud kasutajate_fail
+#
+# Failis on iga rida üks kasutajanimi. Igale kasutajale genereeritakse käsuga pwgen
+# 8-märgiline parool (ainult tähed), kasutaja lisatakse süsteemi ja kasutajanimi ning
+# parool salvestatakse logifaili kujul kasutajanimi:parool.
+# Kõik vajalik on selle skripti sees, teisi skripte välja ei kutsuta.
+
+logifail="loodud_kasutajad_paroolidega"
+
+if [ $# -ne 1 ]; then
+    echo "Kasutusjuhend: $0 kasutajate_fail"
+    exit 1
+fi
+
+kasutajad=$1
+
+if [ ! -f "$kasutajad" ] || [ ! -r "$kasutajad" ]; then
+    echo "Probleem failiga $kasutajad"
+    exit 2
+fi
+echo "Fail $kasutajad on korras"
+
+# parooli genereerimise käsu kontroll, puudumisel paigaldatakse pwgen
+if ! command -v pwgen > /dev/null 2>&1; then
+    echo "Käsku pwgen ei ole, paigaldan selle"
+    apt-get install -y pwgen > /dev/null 2>&1 || { apt-get update > /dev/null 2>&1; apt-get install -y pwgen > /dev/null 2>&1; }
+    if ! command -v pwgen > /dev/null 2>&1; then
+        echo "pwgen paigaldamine ebaõnnestus"
+        exit 3
+    fi
+fi
+
+# logifail luuakse nii, et seda saab lugeda ainult omanik
+touch "$logifail"
+chmod 600 "$logifail"
+
+while IFS= read -r kasutajanimi || [ -n "$kasutajanimi" ]
+do
+    if [ -z "$kasutajanimi" ]; then
+        continue
+    fi
+    if id "$kasutajanimi" > /dev/null 2>&1; then
+        echo "Kasutaja $kasutajanimi on juba olemas"
+        continue
+    fi
+    useradd "$kasutajanimi" -m -s /bin/bash
+    if [ $? -ne 0 ]; then
+        echo "Probleem kasutaja $kasutajanimi lisamisega"
+        continue
+    fi
+    # -0 = ilma numbriteta (ainult tähed), 8 = pikkus, 1 = üks parool
+    parool=$(pwgen -0 8 1)
+    echo "$kasutajanimi:$parool" | chpasswd
+    echo "$kasutajanimi:$parool" >> "$logifail"
+    echo "Kasutaja $kasutajanimi on lisatud, parool on salvestatud faili $logifail"
+done < "$kasutajad"
