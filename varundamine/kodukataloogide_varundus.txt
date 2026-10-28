@@ -1,0 +1,24 @@
+OK:   kasutaja1 -> /home_bcp/kasutaja1.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja2 -> /home_bcp/kasutaja2.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja3 -> /home_bcp/kasutaja3.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja4 -> /home_bcp/kasutaja4.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja5 -> /home_bcp/kasutaja5.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja6 -> /home_bcp/kasutaja6.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja7 -> /home_bcp/kasutaja7.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja8 -> /home_bcp/kasutaja8.28.10.2026.tar.gz (4.0K)
+OK:   kasutaja9 -> /home_bcp/kasutaja9.28.10.2026.tar.gz (4.0K)
+OK:   rico -> /home_bcp/rico.28.10.2026.tar.gz (52K)
+OK:   testkasutaja -> /home_bcp/testkasutaja.28.10.2026.tar.gz (4.0K)
+Varundatud kodukatalooge: 11, vigu: 0
+total 92K
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja1.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja2.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja3.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja4.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja5.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja6.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja7.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja8.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 kasutaja9.28.10.2026.tar.gz
+-rw-r--r-- 1 root root  52K Oct 28 10:45 rico.28.10.2026.tar.gz
+-rw-r--r-- 1 root root 2.3K Oct 28 10:45 testkasutaja.28.10.2026.tar.gz
