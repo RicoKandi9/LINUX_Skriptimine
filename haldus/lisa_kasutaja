@@ -1,0 +1,38 @@
+#!/bin/bash
+# lisa_kasutaja - Ülesanne 1: kasutaja loomine käsurea parameetri abil
+# Autor: Rico Kandi
+#
+# Kasutamine: sudo ./lisa_kasutaja kasutajanimi
+#
+# Skript loob antud nimega kasutaja (ilma paroolita) ja kodukataloogi /home/kasutajanimi.
+# useradd -m kopeerib kodukataloogi ka /etc/skel sisu ehk peidetud failid
+# (.bashrc, .profile, .bash_logout), -s määrab kasutaja koore (shell).
+
+# parameetrite kontroll - täpselt üks parameeter (kasutajanimi)
+if [ $# -ne 1 ]; then
+    echo "Kasutusjuhend: $0 kasutajanimi"
+    exit 1
+fi
+
+kasutajanimi=$1
+
+# kui kasutaja on juba olemas, siis uuesti ei looda
+if id "$kasutajanimi" > /dev/null 2>&1; then
+    echo "Kasutaja $kasutajanimi on juba süsteemis olemas"
+    exit 2
+fi
+
+useradd "$kasutajanimi" -m -d "/home/$kasutajanimi" -s /bin/bash
+kasu_tulemus=$?
+
+# $? - viimase käsu väljundstaatus, 0 kui kõik on korras
+if [ $kasu_tulemus -eq 0 ]; then
+    echo "Kasutaja nimega $kasutajanimi on lisatud süsteemi"
+    grep "^$kasutajanimi:" /etc/passwd
+    grep "^$kasutajanimi:" /etc/shadow
+    ls -la "/home/$kasutajanimi"
+else
+    echo "Probleem kasutaja $kasutajanimi lisamisega"
+    echo "Probleemi kood on $kasu_tulemus"
+    exit 3
+fi
