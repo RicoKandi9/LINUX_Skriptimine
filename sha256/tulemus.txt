@@ -1,0 +1,36 @@
+Töökaust: /home/rico/praks_sha256
+
+== 1) Faili loomine ja kontrollsumma arvutamine ==
+5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03  demo.txt
+
+== 2) Kontrollimine (oodatav tulemus: OK) ==
+demo.txt: OK
+
+== 3) Faili rikkumine ja uus kontroll (oodatav tulemus: FAILED) ==
+demo.txt: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+Fail on muutunud - kontrollsumma ei klapi (nii peabki olema)
+
+== 4) Mitme faili kontroll korraga ==
+6304d764b439f167c6e7254011af9af6ff4fcaa90e167a4d372d1ab06d8fb125  ./arhiiv 2.tar.gz
+7807768b03d63651d049698efa181b361a423324cdd8e8cdec3db64d5c15f462  ./arhiiv 1.tar.gz
+ca848b67f03768c341ed3204860602b4633f0b350759789a3a344746d3e3fca0  ./arhiiv 3.tar.gz
+./arhiiv 2.tar.gz: OK
+./arhiiv 1.tar.gz: OK
+./arhiiv 3.tar.gz: OK
+
+Uuesti pakitud arhiivil on peaaegu alati teine räsi (tar salvestab ka ajad):
+./arhiiv 2.tar.gz: OK
+./arhiiv 1.tar.gz: FAILED
+./arhiiv 3.tar.gz: OK
+sha256sum: WARNING: 1 computed checksum did NOT match
+Valmis.
+
+== kontrollsumma.sh ==
+Loodud: /home/rico/praks_sha256/checksums.txt (3 faili)
+6304d764b439f167c6e7254011af9af6ff4fcaa90e167a4d372d1ab06d8fb125  ./arhiiv 2.tar.gz
+6d804b5b5cd75d4cb63945eff75e172f91dc84b0868b92a69f7a1a4d9b2e3b68  ./arhiiv 1.tar.gz
+ca848b67f03768c341ed3204860602b4633f0b350759789a3a344746d3e3fca0  ./arhiiv 3.tar.gz
+./arhiiv 2.tar.gz: OK
+./arhiiv 1.tar.gz: OK
+./arhiiv 3.tar.gz: OK
