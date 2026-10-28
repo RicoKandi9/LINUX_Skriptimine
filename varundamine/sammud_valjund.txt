@@ -1,0 +1,76 @@
+
+===== 1) Lihtne varukoopia .tar.zst =====
+Loodud: /home/rico/praks2/backup/src_2026-10-28_10-47-56.tar.zst
+
+===== 2) Arhiivi kontrollimine =====
+src/
+src/bin/
+src/bin/run.sh
+src/docs/
+src/docs/README.md
+
+===== 3) Varukoopia suurus =====
+64K
+
+===== 4) Ainult 3 viimast koopiat =====
+Enne: 5 koopiat
+Pärast: 3 koopiat
+src_2026-10-28_10-48-00.tar.zst
+src_2026-10-28_10-47-59.tar.zst
+src_2026-10-28_10-47-58.tar.zst
+
+===== 5) Failide välistamine (*.jpg ja bin) =====
+src/
+src/docs/
+src/docs/README.md
+src/docs/vahe.tmp
+src/docs/markmed.txt
+src/docs/numbrid.txt
+src/imgs/
+src/imgs/a.png
+OK: b.jpg ja run.sh ei ole arhiivis
+
+===== 6) Kuiv jooks (arhiivi ei teki) =====
+drwxrwxr-x rico/rico         0 2026-10-28 10:47 src/
+drwxrwxr-x rico/rico         0 2026-10-28 10:47 src/bin/
+-rwxrwxr-x rico/rico        25 2026-10-28 10:47 src/bin/run.sh
+drwxrwxr-x rico/rico         0 2026-10-28 10:47 src/docs/
+-rw-rw-r-- rico/rico        23 2026-10-28 10:47 src/docs/README.md
+-rw-rw-r-- rico/rico         8 2026-10-28 10:47 src/docs/vahe.tmp
+-rw-rw-r-- rico/rico        20 2026-10-28 10:47 src/docs/markmed.txt
+-rw-rw-r-- rico/rico    108894 2026-10-28 10:47 src/docs/numbrid.txt
+drwxrwxr-x rico/rico         0 2026-10-28 10:47 src/imgs/
+-rw-rw-r-- rico/rico     10000 2026-10-28 10:47 src/imgs/a.png
+-rw-rw-r-- rico/rico     20000 2026-10-28 10:47 src/imgs/b.jpg
+Faile kaustas backup enne: 4, pärast: 4
+
+===== 7) Logimine =====
+[ 2026-10-28 10:48:00 ] BACKUP START
+[ 2026-10-28 10:48:01 ] BACKUP END (/home/rico/praks2/backup/src_2026-10-28_10-48-00.tar.zst)
+
+===== 8) Vaba ruumi kontroll =====
+Vaja: 138970 baiti, vaba: 11536355328 baiti
+OK: ruumi piisab, varundus võib alata
+
+===== 9) SHA-256 kontrollsumma =====
+a6ee6c1860a0d53be8eaf5b9910fbf9e754deda709842ad8a4dcd82fb9e6577f  src_2026-10-28_10-48-00.tar.zst
+src_2026-10-28_10-48-00.tar.zst: OK
+
+===== 10) Kompressorite võrdlus =====
+-rw-rw-r-- 1 rico rico 78469 Oct 28 10:48 /home/rico/praks2/backup/test/src.tar.gz
+-rw-rw-r-- 1 rico rico 36436 Oct 28 10:48 /home/rico/praks2/backup/test/src.tar.xz
+-rw-rw-r-- 1 rico rico 61872 Oct 28 10:48 /home/rico/praks2/backup/test/src.tar.zst
+
+===== 11) .backupignore kasutamine =====
+.backupignore sisu:
+imgs
+*.tmp
+src/
+src/bin/
+src/bin/run.sh
+src/docs/
+src/docs/README.md
+src/docs/markmed.txt
+src/docs/numbrid.txt
+src/.backupignore
+OK: imgs kausta ja .tmp faile arhiivis ei ole
