@@ -1,0 +1,33 @@
+#!/bin/bash
+# kasutajad_failist - Ülesanne 2: kasutajad failist
+# Autor: Rico Kandi
+#
+# Kasutamine: sudo ./kasutajad_failist failinimi
+#
+# Failis on iga rida üks kasutajanimi. Iga nime jaoks kutsutakse välja
+# eelmises ülesandes koostatud skript lisa_kasutaja (peab olema samas kaustas).
+
+if [ $# -ne 1 ]; then
+    echo "Kasutusjuhend: $0 failinimi"
+    exit 1
+fi
+
+failinimi=$1
+# kaust, kus asub see skript (ja lisa_kasutaja)
+skripti_kaust=$(dirname "$0")
+
+if [ -f "$failinimi" ] && [ -r "$failinimi" ]; then
+    echo "Fail $failinimi on korras"
+    # || [ -n "$kasutajanimi" ] - loetakse ka viimane rida, kui selle lõpus pole reavahetust
+    while IFS= read -r kasutajanimi || [ -n "$kasutajanimi" ]
+    do
+        # tühjad read jäetakse vahele
+        if [ -z "$kasutajanimi" ]; then
+            continue
+        fi
+        sh "$skripti_kaust/lisa_kasutaja" "$kasutajanimi"
+    done < "$failinimi"
+else
+    echo "Probleem failiga $failinimi"
+    exit 2
+fi
