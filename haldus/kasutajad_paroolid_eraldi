@@ -1,0 +1,55 @@
+#!/bin/bash
+# kasutajad_paroolid_eraldi - Ülesanne 4: kasutajad ja paroolid on eraldi failides
+# Autor: Rico Kandi
+#
+# Kasutamine: sudo ./kasutajad_paroolid_eraldi kasutajate_fail paroolide_fail
+#
+# Mõlemas failis vastab üks rida ühele kasutajale (1. kasutaja <-> 1. parool jne).
+# Kõik vajalik on selle skripti sees, teisi skripte välja ei kutsuta.
+
+if [ $# -ne 2 ]; then
+    echo "Kasutusjuhend: $0 kasutajate_fail paroolide_fail"
+    exit 1
+fi
+
+kasutajad=$1
+paroolid=$2
+
+# mõlemad failid peavad olemas ja loetavad olema
+for fail in "$kasutajad" "$paroolid"
+do
+    if [ ! -f "$fail" ] || [ ! -r "$fail" ]; then
+        echo "Probleem failiga $fail"
+        exit 2
+    fi
+done
+
+# ridade arv peab klappima (grep -c '' loeb ka viimase rea ilma reavahetuseta)
+kasutajate_arv=$(grep -c '' "$kasutajad")
+paroolide_arv=$(grep -c '' "$paroolid")
+if [ "$kasutajate_arv" -ne "$paroolide_arv" ]; then
+    echo "Kasutajaid on $kasutajate_arv, paroole on $paroolide_arv - failid ei klapi"
+    exit 3
+fi
+echo "Failid on korras: $kasutajate_arv kasutajat"
+
+# paste -d: paneb failide read kokku kujule kasutajanimi:parool
+paste -d: "$kasutajad" "$paroolid" | while IFS=: read -r kasutajanimi parool
+do
+    if [ -z "$kasutajanimi" ]; then
+        continue
+    fi
+    if id "$kasutajanimi" > /dev/null 2>&1; then
+        echo "Kasutaja $kasutajanimi on juba olemas"
+        continue
+    fi
+    useradd "$kasutajanimi" -m -s /bin/bash
+    if [ $? -eq 0 ]; then
+        echo "$kasutajanimi:$parool" | chpasswd
+        echo "Kasutaja $kasutajanimi on lisatud ja parool määratud"
+        grep "^$kasutajanimi:" /etc/passwd
+        grep "^$kasutajanimi:" /etc/shadow
+    else
+        echo "Probleem kasutaja $kasutajanimi lisamisega"
+    fi
+done
